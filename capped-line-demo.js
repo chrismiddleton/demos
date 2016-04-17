@@ -215,4 +215,5 @@ class CappedLineDemo {
 
 window.addEventListener('load', function () {
 	new CappedLineDemo(document.body);
+	document.getElementById('es6-required-msg-div').style.display = 'none';
 });

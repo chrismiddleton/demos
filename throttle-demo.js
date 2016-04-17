@@ -94,4 +94,5 @@ ThrottleDemo.TICK_INTERVAL = 40;
 
 window.addEventListener('load', function () {
 	new ThrottleDemo(document.body);
+	document.getElementById('es6-required-msg-div').style.display = 'none';
 });
