@@ -310,10 +310,6 @@ class CappedLineDemo {
 CappedLineDemo.INTER_INPUT_SPACE = '5px';
 CappedLineDemo.INPUT_WIDTH = '75px';
 
-// CappedLine.log = console.log.bind(console);
-// CappedLineDemo.log = console.log.bind(console);
-// throttle.log = console.log.bind(console);
-
 window.addEventListener('load', function () {
 	new CappedLineDemo(document.body);
 	document.getElementById('es6-required-msg-div').style.display = 'none';
