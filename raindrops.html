@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<title>Raindrops</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			border: 0;
+			line-height: 0;
+		}
+	</style>
+</head>
+<body>
+	<canvas id='rain-curtain'></canvas>
+	<script>
+		var rainCurtainCanvas = document.getElementById("rain-curtain");
+		rainCurtainCanvas.width = document.body.clientWidth;
+		rainCurtainCanvas.height = document.body.clientHeight;
+		
+		function Raindrop (x, y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		Raindrop.prototype.render = function (context) {
+			context.beginPath();
+			context.strokeStyle = 'lightgray';
+			context.lineWidth = 1;
+			context.lineCap = 'round';
+			context.moveTo(this.x, this.y - 20);
+			context.lineTo(this.x, this.y);
+			context.stroke();
+		};
+		
+		Raindrop.prototype.update = function () {
+			// todo
+			this.y += 20;
+		};
+		
+		function RainCurtain (canvas) {
+			this.canvas = canvas;
+			this.drops = [];
+			this.context = canvas.getContext("2d");
+			this.timer = null;
+		}
+		
+		RainCurtain.prototype.iterate = function () {
+			var numDrops = Math.floor((20 * Math.random()) + 1);
+			for (var i = 0; i < numDrops; i++) {
+				var x = Math.floor((this.canvas.width * Math.random()) + 1);
+				this.drops.push(new Raindrop(x, 0));
+			}
+			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.context.fillStyle = 'rgb(0, 0, 45)';
+			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			
+			for (var i = this.drops.length - 1; i >= 0; i--) {
+				var drop = this.drops[i];
+				drop.render(this.context);
+				drop.update();
+				if (drop.y > this.canvas.height) this.drops.splice(i, 1);
+			}
+		};
+		
+		RainCurtain.prototype.start = function () {
+			this.timer = window.setInterval(this.iterate.bind(this), 40);
+		};
+		
+		RainCurtain.prototype.stop = function () {
+			if (this.timer) {
+				window.clearInterval(this.timer);
+				this.timer = null;
+			}
+		};
+		
+		var rainCurtain = new RainCurtain(rainCurtainCanvas);
+		rainCurtain.start();
+		
+		// Possible improvements
+		//
+		// Can add start/stop button
+		// Can make rain drops have different velocities
+		// Use setTimeout instead of setInterval?
+		// make it expand (or contract) its canvas to the size of the window when the window is resized
+		// Using requestAnimationFrame
+		// Adding music
+		
+		
+	</script>
+</body>
+</html>
