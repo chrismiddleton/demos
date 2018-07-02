@@ -56,7 +56,6 @@ function colorGraph (graph) {
 function colorVertex (vertex) {
 	if (vertex.color) return;
 	var color = 1;
-	loop:
 	while (!vertex.color) {
 		var found = false;
 		for (var edge of vertex.edges) {
